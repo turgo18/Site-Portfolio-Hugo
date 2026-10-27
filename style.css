@@ -1,0 +1,517 @@
+/* Global reset basique : */
+/* Pour garantir une apparence homogène entre différents navigateurs */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tout votre code CSS doit se trouver en dessous de cette ligne */
+/* ===== 1. Variables ===== */
+/* root me permet d'appliquer ces variables à toute la page, je les utilise en les appelant avec var(...) */
+:root {
+    --fond: #0F0E1A;              /* fond de la page */
+    --fond-nav: #0B0D22;          /* fond de la navbar */
+    --texte: #FFFFFF;             /* couleur du texte */
+    --violet: #6E50FD;            /* couleur d'accent (boutons, bordures) */
+    --survol: #2E3263;            /* fond d'un élément survolé */
+    --police-titres: "Space Grotesk", sans-serif;
+    --police-texte: "Inter", sans-serif;
+    --fond-image: url("images/Fond/background.webp");   /* image du thème sombre */
+    --fond-melange: screen;                    /* le noir de l'image disparaît */
+    --fond-opacite: 0.4;
+}
+
+
+/* Thème clair : on redéfinit seulement les variables qui changent, donc les couleurs afin de garder la lisibilité 
+   [data-theme="light"] s'applique si la balise <html> a l'attribut data-theme="light" */
+[data-theme="light"] {
+    --fond: #F5F5FA;
+    --fond-nav: #FFFFFF;
+    --texte: #0F0E1A;
+    --survol: #E3E0FF;
+    --fond-image: url("images/Fond/fond-clair.webp");  
+    --fond-melange: multiply;                     /* le blanc de l'image disparaît */
+    --fond-opacite: 0.4;    
+}
+
+/* ===== 2. Style général ===== */
+html {
+    scroll-behavior: smooth;      /* défilement fluide quand on clique sur une ancre de la navbar */
+}
+
+body {
+    background-color: var(--fond);
+    color: var(--texte);
+    font-family: var(--police-texte);
+}
+
+/* Tous les titres et le logo partagent la même police */
+h1, h2, h3, .logo {
+    font-family: var(--police-titres);
+}
+
+/* Évite que la navbar fixe cache le haut d'une section après un clic sur une ancre */
+header, section {
+    scroll-margin-top: 5rem;
+}
+
+/* ===== 3. Navbar ===== */
+.navbar {
+    position: sticky;             /* Reste collée en haut quand on défile */
+    top: 0;                       /* collée à 0 de distance du haut */
+    z-index: 100;                 /* passe au-dessus du reste du contenu */
+    display: flex;                /* range les enfants (logo, liens, icônes) en ligne */
+    justify-content: space-between; /* un à gauche, un au centre, un à droite */
+    align-items: center;          /* centre verticalement */
+    padding: 1rem 2rem;
+    background-color: var(--fond-nav);
+    border-bottom: 2px solid var(--violet);
+    transition: transform 0.3s;   /* disparition de la navbar progressive */
+}
+
+/* tous les liens et boutons de la navbar : même couleur, pas de soulignement */
+.navbar a,
+.icon-button {
+    color: var(--texte);
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;                    /* espace entre les liens */
+    margin-left: auto;
+    margin-right: 3rem;
+}
+
+/* Tous les liens du menu : une seule classe pour tout modifier d'un coup */
+.nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 0.6s;   /* changement de fond progressif */
+}
+
+.nav-link:hover {
+    background-color: var(--survol);
+}
+
+.nav-icons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-button {
+    background: none;                   /* retire le gris par défaut du bouton html */
+    border: none;
+    font-size: 1.4rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;                    /* la main apparaît au survol */
+    transition: background-color 0.2s;  /* temps d'apparition de l'encadré de sélection lors du hover */
+}
+
+.icon-button:hover {
+    background-color: var(--survol);
+}
+
+/* ===== Titres invisibles ===== */
+/* Le titre reste dans la page mais ne s'affiche pas, on n'utilise pas le display:none car cela supprimerait les lecteurs d'écrans, ainsi on réduit les titres à 1pixel et on les coupe */
+.titre-cache {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);        /* découpe tout le contenu : plus rien n'est visible */
+    white-space: nowrap;
+}
+
+/* ===== FOND GALAXIE SUR TOUTE LA PAGE ===== */
+/* La couleur de fond reste celle du body (var(--fond)) : lisibilité garantie.
+   Par-dessus, une image fixe qui occupe tout l'écran. */
+body::before {
+    content: "";                  /* obligatoire pour qu'un pseudo-élément existe */
+    position: fixed;              /* reste en place pendant le défilement */
+    inset: 0;                     /* top, right, bottom, left = 0 : remplit tout l'écran */
+    z-index: -1;                  /* derrière tout le contenu */
+    background-image: var(--fond-image);     /* variable, plus de url() en dur */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: var(--fond-opacite);            /* variable */
+    mix-blend-mode: var(--fond-melange);     /* variable */
+    pointer-events: none;
+}
+
+/* ===== 4. Mise en page des sections ===== */
+/* Les sections ont une largeur maximale et sont centrées */
+section {
+    max-width: 90rem;
+    margin: auto;               /* auto à gauche et à droite = centré */
+    padding: 4rem 2rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;        
+}
+
+/* ===== 5. Bouton rond (utilisé dans le bandeau et les cartes) ===== */
+.round-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;         /* 50% pour arrondir un carré */
+    background-color: var(--violet);
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* ===== 6. Bandeau d'accueil ===== */
+.hero {
+    --hauteur-banniere: 60vh;     /* hauteur de la bannière */
+    --part-visible: 0.65;         /* part de la bannière visible à l'arrivée */
+}
+
+.hero-haut {
+    position: relative;           /* repère pour le petit robot (position: absolute) */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem;                  /* espace robot-texte : plus petit = plus rapproché */
+    max-width: 80rem;
+    margin: auto;
+    padding: 2rem 2rem 0;
+    height: calc(100vh - 5rem - var(--hauteur-banniere) * var(--part-visible));
+    overflow: hidden;
+}
+
+/* La boîte du robot a une largeur fixe afin le texte ne soit plus repoussé */
+.hero-robot {
+    width: 40rem;                 /* largeur de la boîte */
+    max-width: 45%;               /* jamais plus de 45 % de la largeur du bandeau */
+    height: 125%;                 /* plus haut que le bloc : le bas est coupé */
+    object-fit: cover;            /* l'image remplit la boîte et rogne ce qui dépasse */
+    object-position: center top;  /* en rognant, on garde le centre horizontal et le haut */
+    flex-shrink: 0;
+}
+
+.hero-texte {
+    flex: 0 1 26rem;              /*0 indique qu'il ne grandit pas /1 indique qu'il peut rétrécir / largeur de départ 26rem */
+    align-self: center;
+}
+
+.hero-texte h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 1rem;
+}
+
+.hero-texte p {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
+/* Petit robot décoratif, placé à droite du texte */
+.hero-deco {
+    position: absolute;           /* sorti du flux, placé par rapport à .hero-haut */
+    right: 9rem;
+    top: 50%;
+    height: 45%;
+    pointer-events: none;
+}
+
+/* Grande bannière sous le bloc haut */
+.hero-banniere {
+    display: block;
+    width: 100%;
+    height: var(--hauteur-banniere);
+    object-fit: cover;
+    border-radius: 0rem 0rem 0 0;
+}
+
+/* ===== 7. Cartes de projets ===== */
+/* Grille : autant de colonnes que possible, chacune d'au moins 16rem.
+   1fr = la place restante est répartie à parts égales entre les colonnes ça permet de créer du parallélisme */
+/* Grille de 12 colonnes : chaque carte en occupe un nombre différent car elles ne sont pas à la même taille, on crée donc une grande grille dans laquelle on réparti nos cartes */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 2rem;
+    row-gap: 6rem;
+    align-items: start;           /* chaque carte garde sa hauteur, alignée en haut sinon elles s'alignent toutes entre elles à cause de la grille */
+}
+
+/* Ici on réparti les cartes sur notre grille afin de leur donner la taille souhaitée, on leur applique des cases en les appelant avec nth-child(numéro de la carte) */
+/* Ligne 1 : les colonnes 6 et 9 restent vides, ce qui espace les cartes */
+.card:nth-child(1) { grid-column: 1 / 5;   margin-top: 5rem; }   /* colonnes 1 à 5 */
+.card:nth-child(2) { grid-column: 6 / 9; }                       /* colonnes 6 et 9 */
+.card:nth-child(3) { grid-column: 10 / 14; margin-top: 11rem; }   /* colonnes 10 à 14 */
+
+/* Ligne 2 */
+.card:nth-child(4) { grid-column: 2 / 5;   margin-top: 4rem; }  /* colonnes 3 à 5, décalée vers le bas */
+.card:nth-child(5) { grid-column: 7 / 11; }                      /* colonnes 7 à 10 (la grande) */
+
+.card-lien {
+    display: block;             /* le lien occupe toute la carte pour pouvoir cliquer dessus */
+    color: var(--texte);        /* on applique la variable de couleur qui vient des styles en haut */
+    text-decoration: none;
+}
+
+.card-image {
+    aspect-ratio: 3 / 4;        /* format portrait pour toutes les images */
+    background-color: var(--survol);  /* couleur visible si l'image est absente */
+    border-radius: 1rem;
+    overflow: hidden;           /* ce qui dépasse du cadre est caché ça évite les dépassements */
+    margin-bottom: 1rem;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* remplit le cadre en rognant, sans déformer l'image ce qui rend très moche */
+    transition: transform 0.4s;
+}
+
+.card-info {
+    display: flex;
+    justify-content: space-between;  /* titre à gauche, bouton à droite */
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.card-info h3 {
+    font-size: 1.5rem;
+}
+
+/* Effets au survol de la carte, animation de 0.3secondes */
+.card {
+     transition: transform 0.3s, opacity 0.6s;
+}
+
+.card:hover {
+    transform: translateY(-0.5rem);   /* la carte monte un peu au hover, ça se combine à la transformation */
+}
+
+.card:hover .card-image img {
+    transform: scale(1.08);           /* l'image grossit de 8 % au hover pour suivre l'animation sinon c'est moche */
+}
+
+/* Quand on survole la carte, le bouton change : fond jaune, flèche violette */
+.card:hover .round-button {
+    background-color: rgb(255, 235, 53);
+    color: var(--violet);
+}
+
+/* ===== 8. A propos ===== */
+.a-propos-texte {
+    max-width: 45rem;
+    margin: auto;
+    font-size: 1.25rem;
+    line-height: 1.7;             /* hauteur de ligne : texte plus aéré */
+    text-align: center;
+}
+
+/* ===== 9. Formulaire ===== */
+.formulaire {
+    max-width: 36rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;       /* les champs s'empilent */
+    gap: 1.5rem;
+}
+
+.champ {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.champ label {
+    font-weight: 600;
+}
+
+.champ input,
+.champ textarea {
+    padding: 0.9rem 1rem;
+    font-family: var(--police-texte);   /* les champs n'héritent pas de la police par défaut */
+    font-size: 1rem;
+    color: var(--texte);
+    background-color: var(--fond-nav);
+    border: 2px solid var(--survol);
+    border-radius: 0.7rem;
+    transition: border-color 0.2s;
+}
+
+/* :focus = le champ est sélectionné (on clique dedans) */
+.champ input:focus,
+.champ textarea:focus {
+    outline: none;                /* retire le contour bleu par défaut, remplacé par la bordure violette */
+    border-color: var(--violet);
+}
+
+.champ textarea {
+    resize: vertical;             /* on ne peut agrandir que vers le bas */
+}
+
+/* Cette classe sera ajoutée par le JavaScript sur un champ invalide */
+.champ.invalide input,
+.champ.invalide textarea {
+    border-color: #FF5C7A;
+}
+
+.erreur {
+    min-height: 1.25rem;          /* réserve la place : la page ne saute pas quand le message apparaît */
+    color: #FF5C7A;
+    font-size: 0.9rem;
+}
+
+.bouton-envoyer {
+    padding: 1rem 2rem;
+    background-color: var(--violet);
+    color: white;
+    border: none;
+    border-radius: 0.7rem;
+    font-family: var(--police-texte);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.bouton-envoyer:hover {
+    transform: translateY(-2px);
+}
+
+.succes {
+    color: #4ADE80;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ===== 10. Effets JavaScript ===== */
+/* Navbar qui sort de l'écran quand on descend */
+.navbar-cachee {
+    transform: translateY(-100%); /* -100 % de sa propre hauteur : elle monte hors de l'écran */
+}
+
+/* Carte avant son apparition : invisible et décalée vers le bas, effet d'apparition à l'écran */
+.card.cachee {
+    opacity: 0;
+    transform: translateY(2rem);
+}
+
+/* ==== 11. Footer ==== */
+footer {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* ===== 12. Pages projets ===== */
+.projet {
+    max-width: 50rem;             /* plus étroit que les sections de l'accueil */
+}
+
+.projet h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 2rem;
+}
+
+.projet-image {
+    width: 100%;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Pour afficher d'autres formats d'images avec d'autres réglages */
+.projet-image2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3rem;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+/* Permet d'appliquer une taille à l'image .projet-image2 car la width de cette variable resize la box contenant l'image */
+.projet-image2 img {
+    width: 100%;
+    border-radius: 0.7rem;
+}
+
+.projet-image3 {
+    width: 50%;
+    display: block;   /* l'image devient un bloc, sinon margin auto ne marche pas */
+    margin: 0 auto;   /* marges haut/bas à 0, gauche/droite automatiques = centré */
+    margin-bottom: 2rem;
+}
+
+.projet p {
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.lien-retour {
+    color: var(--violet);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ===== 13. Responsive (écrans de 768px de large ou moins) ===== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    .hero {
+        --hauteur-banniere: 40vh;
+    }
+
+    .hero-haut {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .hero-robot {
+        width: 16rem;
+        height: 16rem;
+    }
+
+    .hero-texte {
+        flex: none;
+    }
+
+    .hero-deco {
+        display: none;            /* trop encombrant sur téléphone */
+    }
+
+    /* Cartes : une seule colonne, sans décalage */
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card:nth-child(n) {          /* n = toutes les cartes ; écrase les règles précédentes */
+        grid-column: auto;
+        margin-top: 0;
+    }
+}

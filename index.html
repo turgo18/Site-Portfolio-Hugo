@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Polices Google Fonts : Space Grotesk (titres) et Inter (textes). Ca permet un style sobre et moderne facilement.
+         Les deux "preconnect" préparent la connexion pour charger plus vite. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Mon fichier de style (après les polices pour pouvoir les utiliser) -->
+    <link rel="stylesheet" href="style.css">
+    <title>Hugo CLERGUE - Portfolio</title>
+</head>
+
+<body>
+    <!-- Tout votre HTML doit se trouver après cette ligne -->
+
+    <!-- Barre de navigation : nom à gauche, liens au centre, icônes à droite -->   
+    <nav class="navbar">
+       <!-- Mon nom : lien qui ramène tout en haut de la page -->
+       <a href="#accueil" class="logo">Hugo CLERGUE</a>
+
+        <!-- Menu rapide : tous les liens partagent la classe "nav-link" -->
+        <div class="nav-links">
+            <a href="#accueil" class="nav-link">Accueil</a>
+            <a href="#projets" class="nav-link">Projets</a>
+            <a href="#a-propos" class="nav-link">À propos</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+
+        <!-- Icônes à droite -->
+        <div class="nav-icons">
+            <!-- Bouton clair/sombre : le JavaScript le retrouvera grâce à son id -->
+            <button class="icon-button" id="theme-toggle" aria-label="Changer de thème">☀</button>
+            <!-- Lien vers le formulaire de contact -->
+            <a href="#contact" class="icon-button" aria-label="Contact">✉</a>
+        </div>
+    </nav>
+
+    <!-- Bandeau d'accueil (robot + titre + bouton) -->
+        <!-- Bandeau d'accueil : image à gauche, texte à droite -->
+    <header id="accueil" class="hero">
+        <!-- Partie haute : robot à gauche, texte à droite. Le bas du robot sera coupé par la bannière hero -->
+        <div class="hero-haut">
+            <img src="images/Mecha/Mecha.png" alt="Maquette 3D de robot" class="hero-robot">
+                        <!-- Petit robot décoratif -->
+            <img src="images/Mecha/petit robot deco.png" alt="" class="hero-deco">
+
+            <div class="hero-texte">
+                <h1>Robot 3D</h1>
+                <p>Un projet Blender</p>
+                <a href="robot.html" class="round-button" aria-label="Voir le projet robot">›</a>
+            </div>
+        </div>
+
+        <!-- Grande bannière en dessous -->
+        <img src="images/Hero bannieres/banner 3.jpg" alt="" class="hero-banniere">
+    </header>
+
+    <main>
+        <section id="projets">
+            <h2 class="titre-cache">Projets</h2>
+
+            <!-- Conteneur des cartes : le CSS les range en grille -->
+            <div class="cards">
+
+                <!-- Une carte = un article. Toute la carte est un lien vers la page du projet -->
+                <article class="card">
+                    <a href="robot.html" class="card-lien">
+                        <!-- Le div autour de l'image sert à la rogner quand elle grossit au survol -->
+                        <div class="card-image">
+                            <img src="images/Cartes/card 1.webp" alt="Aperçu du projet robot">
+                        </div>
+                        <div class="card-info">
+                            <h3>Robot 3D</h3>
+                            <!-- span et non <a> : on ne peut pas mettre un lien dans un lien (j'ai essayé) -->
+                            <span class="round-button">›</span>
+                        </div>
+                        <p>Modélisation 3D d'un Mecha</p>
+                    </a>
+                </article>
+
+                <article class="card">
+                    <a href="canva.html" class="card-lien">
+                        <div class="card-image">
+                            <img src="images/Cartes/card 2.webp" alt="Aperçu du projet Canva">
+                        </div>
+                        <div class="card-info">
+                            <h3>Design Canva</h3>
+                            <span class="round-button">›</span>
+                        </div>
+                        <p>Création d'images sur Canva</p>
+                    </a>
+                </article>
+
+                <article class="card">
+                    <a href="pc.html" class="card-lien">
+                        <div class="card-image">
+                            <img src="images/Cartes/card 3.webp" alt="Aperçu du projet personnel">
+                        </div>
+                        <div class="card-info">
+                            <h3>Projet personnel</h3>
+                            <span class="round-button">›</span>
+                        </div>
+                        <p>Suivi de ma passion</p>
+                    </a>
+                </article>
+
+                <article class="card">
+                    <a href="ultrakill.html" class="card-lien">
+                        <div class="card-image">
+                            <img src="images/Cartes/card 4.webp" alt="Aperçu du projet 4">
+                        </div>
+                        <div class="card-info">
+                            <h3>ULTRAKILL</h3>
+                            <span class="round-button">›</span>
+                        </div>
+                        <p>Un jeu qui m'a beaucoup plu</p>
+                    </a>
+                </article>
+
+                <article class="card">
+                    <a href="cicada.html" class="card-lien">
+                        <div class="card-image">
+                            <img src="images/Cartes/card 5.webp" alt="Aperçu du projet 5">
+                        </div>
+                        <div class="card-info">
+                            <h3>Cicada 3301</h3>
+                            <span class="round-button">›</span>
+                        </div>
+                        <p>ARG ou Organisation secrète?</p>
+                    </a>
+                </article>
+
+            </div>
+        </section>
+    
+            <!-- Section À propos (titre invisible) -->
+        <section id="a-propos">
+            <h2 class="titre-cache">À propos</h2>
+            <p class="a-propos-texte">
+                Je suis un élève en 1ère année à l'IIM, passioné et créatif, je souhaite explorer plus en détail le monde du numérique à travers différents outils et axes afin de trouver celui qui me convient le mieux.
+            </p>
+        </section>
+
+        <!-- Section Contact : formulaire -->
+        <section id="contact">
+            <h2 class="titre-cache">Contact</h2>
+
+            <!-- novalidate : désactive les bulles d'erreur du navigateur, car c'est notre JavaScript qui vérifiera -->
+            <form id="formulaire-contact" class="formulaire" novalidate>
+
+                <!-- Un champ = un label + un input + un espace pour le message d'erreur -->
+                <div class="champ">
+                    <!-- for="prenom" relie le label à l'input qui a id="prenom" : cliquer sur le label active le champ -->
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" placeholder="Votre prénom">
+                    <span class="erreur" id="erreur-prenom"></span>
+                </div>
+
+                <div class="champ">
+                    <label for="email">Email</label>
+                    <!-- type="email" : le téléphone affiche un clavier adapté (avec @) -->
+                    <input type="email" id="email" name="email" placeholder="vous@exemple.fr">
+                    <span class="erreur" id="erreur-email"></span>
+                </div>
+
+                <div class="champ">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" placeholder="Votre message (10 caractères minimum)"></textarea>
+                    <span class="erreur" id="erreur-message"></span>
+                </div>
+
+                <button type="submit" class="bouton-envoyer">Envoyer</button>
+
+                <!-- hidden : invisible tant que le JavaScript ne l'affiche pas -->
+                <p class="succes" id="message-succes" hidden>Merci ! Votre message a bien été envoyé.</p>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Hugo CLERGUE</p>
+    </footer>
+
+    <!-- Ne rien écrire ni modifier en dessous de cette ligne -->
+    <script src="javascript.js"></script>
+</body>
+</html>
